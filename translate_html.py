@@ -23,8 +23,6 @@ def separate_code_from_file(filename):
     return [page, code_list]
 
 def translate_file(page, code_list, target_language):
-	import pdb;pdb.set_trace()
-
 	translated_page = translate_text(page, target_language)
 
 	for code in code_list:
@@ -39,7 +37,6 @@ def output_translation(translated_page, filename):
 	Html_file.close()
 
 def translate_output_file(filename, target_languages=all_languages):
-	#import pdb;pdb.set_trace();
 	filename_raw = filename.split(".")[0].split("/")[-1]
 	output_dir = filename.split(".")[0][:-len(filename_raw)] + "/output/"
 	file_output_dir = output_dir + filename_raw + "/"
