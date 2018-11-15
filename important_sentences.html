@@ -1,0 +1,98 @@
+<html>
+<body>
+<h1> Picking important sentences </h1>
+
+<h2>1. Introducing conditional statements </h2>
+
+<p>
+Before filling the pothole in the <code>fillPothole()</code> function, Karel might want to check whether some other repair crew has already filled the hole on that corner with a beeper.  If so, Karel does not need to put down a second one.  To represent such checks in the context of a program, you need to use the if statement, which has one of the following two forms:<pre><code>
+if (conditionalTest()) {
+   statementsToBeExecutedOnlyIfTheConditionIsTrue();
+}
+</code></pre>
+or
+<pre><code>
+if (conditionalTest()) {
+   statementsToBeExecutedIfTheConditionIsTrue();
+} else {
+   statementsToBeExecutedIfTheConditionIsFalse();
+}
+</code></pre>
+The first form of the if statement is useful when you want to perform an action only under certain conditions.  The second is appropriate when you need to choose between two alternative courses of action.
+</p>
+
+
+<h2>2. Introducing iterative statements</h2>
+<p>
+Since you know from this example that there are exactly five holes to fill, the control statement that you need is a for loop, which specifies that you want to repeat some operation a predetermined number of times.  The for loop syntax looks like this:
+<pre> <code>
+for (i = 0; i < numberOfRepetitions; i++) {
+   statementsToBeRepeated();
+}
+</code> </pre>
+For example, if you want to change the <code>FillTwoPotholes.js</code> program so that it solves the more complex problem of filling five evenly spaced holes, all you have to do is write the following code:
+<pre> <code>
+function FillFivePotholes() {
+   for (i = 0; i < 5; i++) {
+      move();
+      fillPothole();
+      move();
+   }
+}
+</code> </pre>
+The repeat statement is useful only when you know in advance the number of repetitions you need to perform.
+</p>
+
+
+<h2>3. Decomposition</h2>
+<p>
+Whenever you begin to solve a programming problem—no matter whether that program is written in Karel or a more advanced programming language—your first task is to figure out how to divide the complete problem into smaller pieces called subproblems, each of which can be implemented as a separate function.  That process is called decomposition.  
+</p>
+
+<h2>4. Concrete example of decomp</h2>
+<p>
+Although you could solve this problem using the four predefined instructions, you can use functions to improve the structure of your program.  If nothing else, you can use turnAround and turnRight to shorten the program and make its intent clearer.  More importantly, you can use decomposition to break the problem down into subproblems and then solve those problems independently.  You can, for example, divide the problem of filling the pothole into the following subproblems:<br>
+
+   1.	Move one block forward to reach the first pothole on 2nd Avenue.<br>
+   2.	Fill the pothole by dropping a beeper into it.<br>
+   3.	Move three blocks forward to reach the second pothole on 5th Avenue.<br>
+   4.	Fill the pothole by dropping a beeper into it.<br>
+   5.	Move one block forward to reach the desired final position.<br>
+
+If you think about the problem in this way, you can use functions to ensure that the program reflects your conception of the problem structure
+</p>
+
+<h2>5. Top-down design</h2>
+<p>
+The central idea in stepwise refinement is that you should start the design of your program from the top, which refers to the level of the program that is conceptually highest and most abstract.  At this level, the beeper tower problem is clearly divided into three independent phases.  First, Karel has to collect all the beepers.  Second, Karel has to deposit them on the last intersection.  Third, Karel has to return to its home position.  This outline suggests the following decomposition of the problem:
+<pre><code>
+function CollectBeeperTowers() {
+   collectAllBeepers();
+   dropAllBeepers();
+   returnHome();
+}
+</code></pre>
+At this level, the problem is easy to understand.  Even though you have not written the code for the functions in the body of CollectBeeperTowers, it is important to convince yourself that, as long as you believe that the functions you are about to write will solve the subproblems correctly, you will have a solution to the problem as a whole.
+</p>
+
+<h2>6. Karel terminology</h2>
+<p>
+Karel’s world is defined by streets running from west to east and avenues running from south to north.  The intersection of a street and an avenue is called a corner.  Karel can only be positioned on a corner and must be facing in one of the four standard compass directions (north, east, south, and west).  In the following sample world, Karel is facing east at the corner of 1st Street and 1st Avenue:
+
+<img src='/Users/feifang/Desktop/src/karel_world.jpg'> 
+
+Several other components of Karel’s world can be seen in this example.  The gray, diamond shaped object in front of Karel is a beeper. Rich Pattis describes beepers as “plastic cones which emit a quiet beeping noise.”  These noises are audible only if Karel and the beeper are on the same corner.  For example, Karel is unaware of the beeper in the diagram as it appears and will discover the beeper only if Karel moves forward to the next corner.  The solid lines in the diagram are walls.  Karel’s world always has walls along the edges and may also contain internal walls.
+</p>
+
+<h2>7. Defining functions</h2>
+<p>
+One of the most powerful features of the Karel programming language is the ability to define new functions.  Whenever you have a sequence of Karel operations that performs some useful task—such as turning right—you can give that sequence a name.  The operation of encapsulating a sequence of instructions under a new name is called defining a function.  The format for defining a function looks like this:
+<pre><code>
+function name() {
+   bodyStatements();
+}
+</code></pre>
+The first word in this pattern is function, which is used in both Karel and JavaScript to define a function.  Words that have a specific, predefined meaning in a programming language are called keywords.  
+</p>
+
+</html>
