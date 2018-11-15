@@ -57,7 +57,7 @@ def main():
 	filename = sys.argv[1]
 	target_languages = all_languages
 	if len(sys.argv) > 2:
-		target_languages = [sys.argv[i] for i in range(2,len(sys.argv))]	
+		target_languages = sys.argv[2:]	
 	translate_output_file(filename, target_languages=target_languages)
 
 if __name__ == "__main__":
