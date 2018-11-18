@@ -1,0 +1,100 @@
+<div class="section" id="example1">
+    <div id ='example1Ide' class = "ide getStarted" style="height:300px">
+      <div id = 'example1IdeCenter' class = "ideCenter" >
+         <div id = 'example1EditorDiv' class = 'ideEditorDiv' style="width:200px"></div>
+         <div id = 'example1CanvasDiv' class = 'ideCanvasDiv'>
+            <canvas id='example1Canvas' class = 'ideCanvas'></canvas>
+         </div>
+      </div>
+    </div>
+    <div style="width:100%;">
+        <div class="buttonBar">
+           <button class="btn btn-primary" id="example1RunButton"><span class="glyphicon glyphicon-play"></span> Run Program</button>
+        </div> 
+    </div>
+<script>
+
+        
+
+function exampleOne() {
+STARTER_CODE = `
+<%
+  include('templates/text/'+lang+'/ch2/starterCodeA.java')
+%>
+`
+// because of that extra endline at the start of the string
+STARTER_CODE = STARTER_CODE.trim();
+
+ var karelIde = null;
+ var karelEditor = null;
+ var buttonState = 'play';
+
+ function main() {
+   karelEditor = importEditorCode('example1Editor','example1EditorDiv', STARTER_CODE, false);
+     //importRunButtonBar('example1ButtonBar');
+    
+    $("[title]").tooltip({ position: "bottom center", opacity: 0.9});
+    
+    initTabs();
+    var canvas = document.getElementById('example1Canvas');
+    karelIde = KarelIde(karelEditor, canvas, 'stepUp');
+    $('#example1RunButton').click(function(){playClicked()});
+    onresize();
+    
+ }
+
+ function playClicked() {
+  if(buttonState == 'play') {
+    karelIde.playButton();
+      
+      var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
+      $('#example1RunButton').html(resetText);
+      buttonState = 'reset';
+     } else if (buttonState == 'reset') {
+      karelIde.stopButton();
+      var playText = '<span class="glyphicon glyphicon-play"></span> Run Program';
+      $('#example1RunButton').html(playText);
+      buttonState = 'play';
+     }
+  
+  }
+
+ function onresize() { 
+    var parentHeight = 300;
+    var canvasWidth = 300
+    var parentWidth = $("#example1").width();
+    console.log('pw: ' + parentWidth);
+
+    var ide = document.getElementById('example1Ide');
+    var editorDiv = document.getElementById('example1EditorDiv');
+    var canvas = document.getElementById('example1CanvasDiv');
+    
+    var ideHeight = parentHeight
+    var centerHeight = ideHeight;
+
+    var availibleWidth = parentWidth;
+    var elementSpacing = 12;
+
+    var editorWidth = availibleWidth - canvasWidth - elementSpacing; 
+
+    canvas.style.width = canvasWidth + 'px';
+    canvas.style.height = canvasWidth + 'px';
+    canvas.style.left = (editorWidth + elementSpacing) + 'px';
+
+    editorDiv.style.left = 0 + 'px'
+    editorDiv.style.width = editorWidth + 'px';
+    editorDiv.style.height = parentHeight + 'px';
+    console.log('editor width: ' + editorWidth)
+    if (karelIde) {
+       karelIde.resizeCanvas(canvasWidth, canvasWidth);
+    }
+    if (karelEditor) {
+       karelEditor.renderer.onResize();
+    }
+ }
+ main()
+ 
+}
+exampleOne();
+    </script>
+</div>

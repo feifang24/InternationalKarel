@@ -1,0 +1,750 @@
+<html> 
+<head> 
+<title>International Karel</title>
+
+<script src="../plugins/jquery.min.js"></script>
+
+<link rel="stylesheet"  href="../plugins/bootstrap/css/bootstrap.min.css">
+<script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="../style.css">
+
+<script src="..//karel/js/html/websiteImports.js"></script>
+<script>importCss();</script>
+<script>importJs();</script></head> 
+
+<body> 
+
+<nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand brand" href="..//">Karel</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Chapters <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="../en/chapter1.html">1 - Meet Karel</a></li>
+            <li><a href="../en/chapter2.html">2 - Programming Karel</a></li>
+            <li><a href="../en/chapter3.html">3 - Control Statements</a></li>
+            
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Java <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="../chapter1.html">Java</a></li>
+            <li><a href="../chapter2.html">JavaScript</a></li>
+            <li><a href="../chapter2.html">Python</a></li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">English <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="../en/chapter2.html">English</a></li>
+            <li><a href="../sp/chapter2.html">Spanish</a></li>
+            <!-- <li><a href="../zh/chapter2.html">Chinese</a></li>
+            <li><a href="../sw/chapter2.html">Swahili</a></li> -->
+          </ul>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="../schedule.html"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> About</a></li>
+      </ul>
+      
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+   <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-xs-12">
+
+<h1>
+Chapter 2: Programming Karel
+</h1>
+<hr/>
+<p>
+  The simplest style of Karel program specifies a sequence of built-in commands that should be executed when the program is run. Consider this simple Karel program:
+</p> <div class="section" id="example1">
+    <div id ='example1Ide' class = "ide getStarted" style="height:300px">
+      <div id = 'example1IdeCenter' class = "ideCenter" >
+         <div id = 'example1EditorDiv' class = 'ideEditorDiv' style="width:200px"></div>
+         <div id = 'example1CanvasDiv' class = 'ideCanvasDiv'>
+            <canvas id='example1Canvas' class = 'ideCanvas'></canvas>
+         </div>
+      </div>
+    </div>
+    <div style="width:100%;">
+        <div class="buttonBar">
+           <button class="btn btn-primary" id="example1RunButton"><span class="glyphicon glyphicon-play"></span> Run Program</button>
+        </div> 
+    </div>
+<script>
+
+        
+
+function exampleOne() {
+STARTER_CODE = `
+/*
+ * File: BeeperPickingKarel.java
+ * -----------------------------
+ * The BeeperPickingKarel program defines a "run" 
+ * method with three commands. These commands cause  
+ * Karel to move forward one block, pick up a beeper
+ * and then move ahead to the next corner.
+ */
+import karel.en.*;
+public class BeeperPickingKarel extends Karel {
+   public void run() {
+      move();
+      pickBeeper();
+      move();
+   } 
+}`
+// because of that extra endline at the start of the string
+STARTER_CODE = STARTER_CODE.trim();
+
+ var karelIde = null;
+ var karelEditor = null;
+ var buttonState = 'play';
+
+ function main() {
+   karelEditor = importEditorCode('example1Editor','example1EditorDiv', STARTER_CODE, false);
+     //importRunButtonBar('example1ButtonBar');
+    
+    $("[title]").tooltip({ position: "bottom center", opacity: 0.9});
+    
+    initTabs();
+    var canvas = document.getElementById('example1Canvas');
+    karelIde = KarelIde(karelEditor, canvas, 'stepUp');
+    $('#example1RunButton').click(function(){playClicked()});
+    onresize();
+    
+ }
+
+ function playClicked() {
+  if(buttonState == 'play') {
+    karelIde.playButton();
+      
+      var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
+      $('#example1RunButton').html(resetText);
+      buttonState = 'reset';
+     } else if (buttonState == 'reset') {
+      karelIde.stopButton();
+      var playText = '<span class="glyphicon glyphicon-play"></span> Run Program';
+      $('#example1RunButton').html(playText);
+      buttonState = 'play';
+     }
+  
+  }
+
+ function onresize() { 
+    var parentHeight = 300;
+    var canvasWidth = 300
+    var parentWidth = $("#example1").width();
+    console.log('pw: ' + parentWidth);
+
+    var ide = document.getElementById('example1Ide');
+    var editorDiv = document.getElementById('example1EditorDiv');
+    var canvas = document.getElementById('example1CanvasDiv');
+    
+    var ideHeight = parentHeight
+    var centerHeight = ideHeight;
+
+    var availibleWidth = parentWidth;
+    var elementSpacing = 12;
+
+    var editorWidth = availibleWidth - canvasWidth - elementSpacing; 
+
+    canvas.style.width = canvasWidth + 'px';
+    canvas.style.height = canvasWidth + 'px';
+    canvas.style.left = (editorWidth + elementSpacing) + 'px';
+
+    editorDiv.style.left = 0 + 'px'
+    editorDiv.style.width = editorWidth + 'px';
+    editorDiv.style.height = parentHeight + 'px';
+    console.log('editor width: ' + editorWidth)
+    if (karelIde) {
+       karelIde.resizeCanvas(canvasWidth, canvasWidth);
+    }
+    if (karelEditor) {
+       karelEditor.renderer.onResize();
+    }
+ }
+ main()
+ 
+}
+exampleOne();
+    </script>
+</div><p>
+The program is composed of several parts. The first part consists of the following lines:
+</p>
+<p>
+<pre>
+/*
+ * File: BeeperPickingKarel.java
+ * -----------------------------
+ * The BeeperPickingKarel class extends the basic Karel class
+ * by defining a "run" method with three commands.  These
+ * commands cause Karel to move forward one block, pick up
+ * a beeper, and then move ahead to the next corner.
+ */
+</pre>
+</p>
+<p>
+  These lines are an example of a comment, which is simply text designed to explain the operation of the program to human readers. Comments in both Karel and Java begin with the characters /* and end with the characters */. Here, the comment begins on the first line and ends several lines later. The stars on the individual lines that make up the text of the comment are not required, but make it easier for human readers to see the extent of the comment. In a simple program, extensive comments may seem silly because the effect of the program is obvious, but they are extremely important as a means of documenting the design of larger, more complex programs.
+  The second part of the program is the line
+<pre>
+  import stanford.karel.*;</pre>
+</p>
+<p>
+  This line requests the inclusion of all definitions from the stanford.karel library. This library contains the basic definitions necessary for writing Karel programs, such as the definitions of the standard operations <code>move()</code> and <code>pickBeeper()</code>. Because you always need access to these operations, every Karel program you write will include this import command before you write the actual program.
+</p>
+<p>
+ The final part of the Karel program consists of the following class definition:
+<pre>
+public class BeeperPickingKarel extends Karel {
+  public void run() {
+    move();
+    pickBeeper();
+    move();
+  }
+}
+</pre>
+</p>
+<p>
+  To understand this definition, it is useful to look more carefully at its structure. The definition of the BeeperPickingKarel class consists of the line beginning with public class and encompasses everything between the curly brace at the end of that line and the corresponding closing brace on the last line of the program. The single line that introduces the new class is called the header of the definition; the code between the braces is called the body.
+</p>
+<p>
+  In programming, it is often very useful to think about a particular definition and its body as separable ideas. In this example, the definition of BeeperPickingKarel has the following form, where the entire body of the definition has been replaced by a box that you can put out of your mind for the moment:
+</p>
+<pre>
+public class BeeperPickingKarel extends Karel {
+  /* Body of the class definition */
+}
+</pre>
+<p>
+  The header line at the top tells you quite a bit about the BeeperPickingKarel class, even before you have looked to see what the body contains. The key new concept in the class header is embodied in the word extends, which is used in both Karel and Java to indicate that a new class is an extension of an existing one. Here, the class header line indicates that BeeperPickingKarel is an extension of the standard Karel class imported from the stanford.karel library.
+</p>
+
+<p>
+Saying that a program (here, BeeperPickingKarel) <code>extends</code> a class (in this case, Karel) tells the computer that the new BeeperPickingKarel program will be a Karel program.
+</p>
+
+<p>
+Now let's look at the body of the BeeperPickingKarel program. That body consists of the following lines:
+</p>
+<pre>
+  public void run() {
+    move();
+    pickBeeper();
+    move(); 
+  }
+</pre>
+<p>
+These lines represent the definition of a new method, which specifies the sequence of steps necessary to respond to a command. As in the case of the BeeperPickingKarel class itself, the method definition consists of two parts that can be considered separately: The first line constitutes the method header and the code between the curly braces is the method body. If you ignore the body for now, the method definition looks like this:
+</p>
+<pre>
+  public void run() {
+    /* body of the method definition */
+  }
+</pre>
+<p>
+The first two words in the method header, public and void, are part of Java’s syntactic structure, and you should pretty much feel free to ignore them at this point. The next word on the header line specifies the name of the new method, which in this case is the method run. Defining a method means that the new Karel subclass can respond to a new command with that name. The built-in Karel class responds to the commands move(), turnLeft(), pickBeeper(), and putBeeper(); a BeeperPickingKarel responds to that same set of commands plus a new command called run. The run command plays a special role in a Karel program. When you start a Karel program in the Eclipse environment, it creates a new Karel instance of the appropriate subclass, adds that Karel to a world that you specify, and then issues the run command. The effect of issuing that command is defined by the body of the run method, which is a sequence of commands that the robot will execute in order. For example, the body of the run method for the BeeperPickingKarel class is
+</p>
+<pre>
+    move();
+    pickBeeper();
+    move();
+</pre>
+<p>
+  Thus, if the initial state of the world matches the example given in Chapter 1, Karel first moves forward into the corner containing the beeper, picks up that beeper, and finally moves forward to the corner just before the wall, as shown in the following before-and- after diagram:
+  </p>
+<center>
+<img style ="width:100%" src="../images/ch2/example1.png"/>
+</center>
+<h2>Solving a more interesting problem</h2>
+<p>
+  The BeeperPickingKarel class defined in Figure 1 doesn’t do very much as yet. Let’s try to make it a little more interesting. Suppose that the goal is not simply to get Karel to pick up the beeper but to move the beeper from its initial position on 2nd Avenue and 1st Street to the center of the ledge at 5th Avenue and 2nd Street. Thus, your next assignment is to define a new Karel subclass that accomplishes the task illustrated in this diagram:
+  </p>
+<center>
+<img style ="width:100%" src="../images/ch2/example2.png"/>
+</center>
+<p>
+  The first three commands in the new program—the ones that move forward, pick up the beeper, and then move up to the ledge—are the same as before:
+</p>
+<pre>
+    move();
+    pickBeeper();
+    move();
+</pre>
+<p>
+  From here, the next step is to turn left to begin climbing the ledge. That operation is easy, because Karel has a turnLeft command in its standard repertoire. Executing a turnLeft command at the end of the preceding sequence of commands leaves Karel facing north on the corner of 3rd Avenue and 1st Street. If Karel then executes a move command, it will move north to reach the following position:
+</p>
+<center>
+<img style ="width:50%" src="../images/ch2/example2-mid.png"/>
+</center>
+<p>
+  From here, the next thing you need to do is get Karel to turn right so that it is again facing east. While this operation is conceptually just as easy as getting Karel to turn left, there is a slight problem: Karel’s language includes a turnLeft command, but no turnRight command. It’s as if you bought the economy model and have now discovered that it is missing some important features.
+</p>
+<p>
+  At this point, you have your first opportunity to begin thinking like a programmer. You have one set of commands, but not exactly the set you need. What can you do? Can you accomplish the effect of a turnRight command using only the capabilities you have? The answer, of course, is yes. You can accomplish the effect of turning right by turning left three times. After three left turns, Karel will be facing in the desired direction. From here, all you need to do is program Karel to move over to the center of the ledge, drop the beeper and then move forward to the final position. Here is a complete implementation of a StepUp program that accomplishes the entire task:
+</p><div class="section" id="example2">
+    <div id ='example2Ide' class = "ide getStarted" style="height:450px">
+      <div id = 'example2IdeCenter' class = "ideCenter" >
+         <div id = 'example2EditorDiv' class = 'ideEditorDiv' style="width:200px"></div>
+         <div id = 'example2CanvasDiv' class = 'ideCanvasDiv'>
+            <canvas id='example2Canvas' class = 'ideCanvas'></canvas>
+         </div>
+      </div>
+    </div>
+    <div style="width:100%;">
+        <div id="example2ButtonBar" class="buttonBar"></div> 
+    </div>
+<script>
+
+        
+
+function example2() {
+CANVAS_WIDTH = 300
+STARTER_CODE = `/*
+* File: StepUp.java
+* ----------------------------
+* In the StepUp program, Karel picks up
+* a beeper from 1st Street and then
+* carries that beeper to the center of 
+* a ledge on 2nd Street.
+*/
+import stanford.karel.*;
+public class BeeperTotingKarel extends Karel {
+  public void run() {
+    move();
+    pickBeeper();
+    move();
+    turnLeft();
+    move();
+    turnLeft();
+    turnLeft();
+    turnLeft();
+    move();
+    move();
+    putBeeper();
+    move();
+  } 
+}`
+
+ var karelIde = null;
+ var karelEditor = null;
+ var buttonState = 'play';
+
+ function main() {
+   karelEditor = importEditorCode('example2Editor','example2EditorDiv', STARTER_CODE, false);
+     importRunButtonBar('example2ButtonBar');
+    
+    $("[title]").tooltip({ position: "bottom center", opacity: 0.9});
+    
+    initTabs();
+    var canvas = document.getElementById('example2Canvas');
+    karelIde = KarelIde(karelEditor, canvas, 'stepUp');
+    $('#playButton').click(function(){playClicked()});
+    onresize();
+    
+ }
+
+ function playClicked() {
+  if(buttonState == 'play') {
+    karelIde.playButton();
+      
+      var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
+      $('#playButton').html(resetText);
+      buttonState = 'reset';
+     } else if (buttonState == 'reset') {
+      karelIde.stopButton();
+      var playText = '<span class="glyphicon glyphicon-play"></span> Run Program';
+      $('#playButton').html(playText);
+      buttonState = 'play';
+     }
+  
+  }
+
+ function onresize() { 
+    var ideHeight = $("#example2Ide").height();
+    var parentWidth = $("#example2").width();
+    console.log('pw: ' + parentWidth);
+
+    var ide = document.getElementById('example2Ide');
+    var editorDiv = document.getElementById('example2EditorDiv');
+    var canvas = document.getElementById('example2CanvasDiv');
+    var center = document.getElementById('example2IdeCenter');
+    
+
+    var centerHeight = ideHeight;
+
+    var availibleWidth = parentWidth;
+    var elementSpacing = 12;
+
+    var editorWidth = availibleWidth - CANVAS_WIDTH - elementSpacing; 
+
+    canvas.style.width = CANVAS_WIDTH + 'px';
+    canvas.style.height = CANVAS_WIDTH + 'px';
+    canvas.style.left = (editorWidth + elementSpacing) + 'px';
+
+    editorDiv.style.left = 0 + 'px'
+    editorDiv.style.width = editorWidth + 'px';
+    editorDiv.style.height = ideHeight + 'px';
+    console.log('editor width: ' + editorWidth)
+    if (karelIde) {
+       karelIde.resizeCanvas(CANVAS_WIDTH, CANVAS_WIDTH);
+    }
+    if (karelEditor) {
+       karelEditor.renderer.onResize();
+    }
+ }
+ main()
+ 
+}
+example2();
+    </script>
+</div><h2>Defining new methods</h2>
+<p>
+  Even though the <code>StepUp</code> program above demonstrates that it is possible to perform the turnRight operation using only Karel’s built-in commands, the resulting program is not particularly clear conceptually. In your mental design of the program, Karel turns right when it reaches the top of the ledge. The fact that you have to use three turnLeft commands to do so is annoying. It would be much simpler if you could simply say <code>turnRight()</code> and have Karel understand this command. The resulting program would not only be shorter and easier to write, but also significantly easier to read.
+</p>
+
+<p>
+  Fortunately, the Karel programming language makes it possible to define new commands simply by including new method definitions. Whenever you have a sequence of Karel commands that performs some useful task--such as turning right--you can define a new method that executes that sequence of commands. The format for defining a new Karel method has much the same as the definition of <code>run</code> in the preceding examples, which is a method definition in its own right. A typical method definition looks like this:
+</p>
+
+<p style="margin-left:3em">
+<code>private void </code><i>name</i><code>() {</code><br/>
+   <i style="margin-left:2em">commands that make up the body of the method</i><br/>
+<code>}</code>
+</p>
+
+<p>
+  In this pattern, name represents the name you have chosen for the new method. To complete the definition, all you have to do is provide the sequence of commands in the lines between the curly braces. For example, you can define <code>turnRight</code> as follows:
+</p>
+
+<p style="margin-left:3em">
+<code>private void turnRight() {</code><br/>
+   <code style="margin-left:2em">turnLeft();</code><br/>
+   <code style="margin-left:2em">turnLeft();</code><br/>
+   <code style="margin-left:2em">turnLeft();</code><br/>
+<code>}</code>
+</p>
+
+<p>
+  Similarly, you could define a new <code>turnAround</code> method like this:
+</p>
+
+<p style="margin-left:3em">
+<code>private void turnAround() {</code><br/>
+   <code style="margin-left:2em">turnLeft();</code><br/>
+   <code style="margin-left:2em">turnLeft();</code><br/>
+<code>}</code>
+</p>
+
+<p>
+  You can use the name of a new method just like any of Karel’s built-in commands. For example, once you have defined <code>turnRight</code>, you could replace the three turnLeft commands in the <code>StepUpKarel</code> class with a single call to the <code>turnRight</code> method. Here is a revised implementation of the program that uses <code>turnRight</code>:
+</p>
+
+<div class="section" id="example3">
+    <div id ='example3Ide' class = "ide getStarted" style="height:550px">
+      <div id = 'example3IdeCenter' class = "ideCenter" >
+         <div id = 'example3EditorDiv' class = 'ideEditorDiv' style="width:200px"></div>
+         <div id = 'example3CanvasDiv' class = 'ideCanvasDiv'>
+            <canvas id='example3Canvas' class = 'ideCanvas'></canvas>
+         </div>
+      </div>
+    </div>
+    <div style="width:100%;">
+        <div class="buttonBar">
+           <button class="btn btn-primary" id="example3RunButton"><span class="glyphicon glyphicon-play"></span> Run Program</button>
+        </div> 
+    </div>
+<script>
+
+        
+
+function example3() {
+CANVAS_WIDTH = 300
+STARTER_CODE = `/*
+ * File: BeeperPickingKarel.java
+ * -----------------------------
+ * The BeeperPickingKarel program defines a "run" 
+ * method with three commands. These commands cause  
+ * Karel to move forward one block, pick up a beeper,  
+ * and then move ahead to the next corner.
+ */
+public class BeeperTotingKarel extends Karel {
+   public void run() {
+      move();
+      pickBeeper();
+      move();
+      turnLeft();
+      move();
+      turnRight();
+      move();
+      move();
+      putBeeper();
+      move();
+   }
+
+   /**
+    * Turns Karel 90 degrees to the right.
+    */
+   private void turnRight() {
+      turnLeft();
+      turnLeft();
+      turnLeft();
+   }
+}`
+
+ var karelIde = null;
+ var karelEditor = null;
+ var buttonState = 'play';
+
+ function main() {
+   karelEditor = importEditorCode('example3Editor','example3EditorDiv', STARTER_CODE, false);
+     //importRunButtonBar('example3ButtonBar');
+    
+    $("[title]").tooltip({ position: "bottom center", opacity: 0.9});
+    
+    initTabs();
+    var canvas = document.getElementById('example3Canvas');
+    karelIde = KarelIde(karelEditor, canvas, 'stepUp');
+    $('#example3RunButton').click(function(){playClicked()});
+    onresize();
+    
+ }
+
+ function playClicked() {
+  if(buttonState == 'play') {
+    karelIde.playButton();
+      
+      var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
+      $('#example3RunButton').html(resetText);
+      buttonState = 'reset';
+     } else if (buttonState == 'reset') {
+      karelIde.stopButton();
+      var playText = '<span class="glyphicon glyphicon-play"></span> Run Program';
+      $('#example3RunButton').html(playText);
+      buttonState = 'play';
+     }
+  
+  }
+
+ function onresize() { 
+    var ideHeight = $("#example3Ide").height();
+    var parentWidth = $("#example3").width();
+    console.log('pw: ' + parentWidth);
+
+    var ide = document.getElementById('example3Ide');
+    var editorDiv = document.getElementById('example3EditorDiv');
+    var canvas = document.getElementById('example3CanvasDiv');
+    var center = document.getElementById('example3IdeCenter');
+    
+
+    var centerHeight = ideHeight;
+
+    var availibleWidth = parentWidth;
+    var elementSpacing = 12;
+
+    var editorWidth = availibleWidth - CANVAS_WIDTH - elementSpacing; 
+
+    canvas.style.width = CANVAS_WIDTH + 'px';
+    canvas.style.height = CANVAS_WIDTH + 'px';
+    canvas.style.left = (editorWidth + elementSpacing) + 'px';
+
+    editorDiv.style.left = 0 + 'px'
+    editorDiv.style.width = editorWidth + 'px';
+    editorDiv.style.height = ideHeight + 'px';
+    console.log('editor width: ' + editorWidth)
+    if (karelIde) {
+       karelIde.resizeCanvas(CANVAS_WIDTH, CANVAS_WIDTH);
+    }
+    if (karelEditor) {
+       karelEditor.renderer.onResize();
+    }
+ }
+ main()
+ 
+}
+example3();
+    </script>
+</div><p>
+  There is, of course, one obvious difference between the definitions of the <code>run</code> and <code>turnRight</code> methods in the program above: the <code>run</code> method is marked as <code>public</code> in contrast to <code>turnRight</code>, which is marked as <code>private</code>. The difference between these two designations is that public methods can be invoked from outside the class, while private methods cannot. The run method needs to be public because the Karel environment needs to be able to issue a run command to get things going. It is generally good programming practice to keep definitions private whenever possible. 
+</p>
+
+<h2>Decomposition</h2>
+
+<p>
+  As a way of illustrating more of the power that comes with being able to define new methods, it’s useful to have Karel do something a little more practical than move a beeper from one place to another. The roadways around Palo Alto often seem to be in need of repair, and it might be fun to see if Karel can fill potholes in its abstract world. For example, imagine that Karel is standing on the “road” shown in the left-hand figure, one corner to the left of a pothole in the road. Karel’s job is to fill the hole with a beeper and proceed to the next corner. The diagram on the right illustrates how the world should look after the program execution.
+</p>
+
+<center>
+<img style ="width:100%" src="../images/ch2/example3.png"/>
+</center>
+
+<p>
+  If you are limited to the four predefined commands, the run method to solve this problem would look like this:
+</p>
+
+<code>
+<div style="margin-left:3em;padding-bottom: 8px">
+  private void run() {<br/>
+  <div style="margin-left:2em">
+    move();<br/>
+    turnLeft();<br/>
+    turnLeft();<br/>
+    turnLeft();<br/>
+    move();<br/>
+    putBeeper();<br/>
+    turnLeft();<br/>
+    turnLeft();<br/>
+    move();<br/>
+    turnLeft();<br/>
+    turnLeft();<br/>
+    turnLeft();<br/>
+    move();
+  </div>   
+  }
+</div>
+</code>
+
+<p>
+  The initial motivation for defining the turnRight method was that it was cumbersome to keep repeating three turnLeft commands to accomplish a right turn. Defining new methods has another important purpose beyond allowing you to avoid repeating the same command sequences every time you want to perform a particular task. The power to define methods unlocks the most important strategy in programming—the process of breaking a large problem down into smaller pieces that are easier to solve. The process of breaking a program down into smaller pieces is called decomposition, and the component parts of a large problem are called subproblems.
+</p>
+
+<p>
+  As an example, the problem of filling the hole in the roadway can be decomposed into the following subproblems:
+</p>
+
+<ol>
+<li> Move up to the hole
+<li> Fill the hole by dropping a beeper into it
+<li> Move on to the next corner
+</ol>
+
+<p>
+  If you think about the problem in this way, you can use method definitions to create a program that reflects your conception of the program structure. The run method would look like this:
+  </p>
+
+<p style="margin-left:3em">
+<code>private void run() {</code><br/>
+   <code style="margin-left:2em">move();</code><br/>
+   <code style="margin-left:2em">fillPothole();</code><br/>
+   <code style="margin-left:2em">move();</code><br/>
+<code>}</code>
+</p>
+
+<p>
+  The correspondence with the outline is immediately clear, and everything would be great if only you could get Karel to understand what you mean by fillPothole. Given the power to define methods, implementing fillPothole is extremely simple. All you have to do is define a fillPothole method whose body consists of the commands you have already written to do the job, like this:
+</p>
+
+<p style="margin-left:3em">
+<code>private void fillPothole() {</code><br/>
+   <code style="margin-left:2em">turnRight();</code><br/>
+   <code style="margin-left:2em">move();</code><br/>
+   <code style="margin-left:2em">putBeeper();</code><br/>
+   <code style="margin-left:2em">turnAround();</code><br/>
+   <code style="margin-left:2em">move();</code><br/>
+   <code style="margin-left:2em">turnRight();</code><br/>
+<code>}</code>
+</p>
+
+<p>
+  Here is the complete program:
+</p>
+
+<pre>
+/*
+ * File: PotholeFillingKarel.java
+ * ------------------------------
+ * The PotholeFillingKarel class puts a beeper into a pothole
+ * on 2nd Avenue.  This version of the program decomposes
+ * the problem so that it makes use of a fillPothole method.
+ */
+import stanford.karel.*;
+public class PotholeFillingKarel extends Karel {
+   public void run() {
+      move();
+      fillPothole();
+      move();
+   }
+
+   /**
+    * Fills the pothole beneath Karel's current position by
+    * placing a beeper on that corner.  For this method to
+    * work correctly, Karel must be facing east immediately
+    * above the pothole.  When execution is complete, Karel
+    * will have returned to the same square and will again
+    * be facing east.
+    */
+   private void fillPothole() {
+      turnRight();
+      move();
+      putBeeper();
+      turnAround();
+      move();
+      turnRight();
+   } 
+
+   /**
+    * Turns Karel 90 degrees to the right.
+    */
+   public void turnRight() {
+      turnLeft();
+      turnLeft();
+      turnLeft();
+   }
+}
+</pre>
+
+<p>
+<hr/>
+<center>
+  <a class="btn btn-primary btn-lg" href="chapter3.html" role="button">Next Chapter</a>
+</center>
+</p>
+
+
+<hr>
+
+<div class="footer">
+	<p class="pull-left">
+		&#169; Stanford 2018 &#124; Karel the Robot was designed by Rich Pattis. You are reading a web translation of "Karel the Robot Learns Java" by Eric Roberts. 
+	</p>
+</div>
+	
+
+<!-- <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-74362126-1', 'auto');
+  ga('send', 'pageview');
+
+</script> -->
+        </div>
+      </div>
+   </div>
+
+</body> 
+</html>

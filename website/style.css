@@ -1,0 +1,25 @@
+body {
+    overflow: auto;
+    font-size:15px;
+}
+
+p {
+  text-align: justify;
+}
+
+.buttonBar {
+  clear:left;
+  padding-top: 5px;
+  height:50px;
+}
+
+pre {
+  background-color: white;
+}
+
+code {
+  padding: 0px;
+	font-weight: bold;
+	color:black;
+	background-color: white;
+}

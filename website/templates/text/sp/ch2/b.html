@@ -1,0 +1,114 @@
+<p>
+The program is composed of several parts. The first part consists of the following lines:
+</p>
+<p>
+<pre>
+/*
+ * File: BeeperPickingKarel.java
+ * -----------------------------
+ * The BeeperPickingKarel class extends the basic Karel class
+ * by defining a "run" method with three commands.  These
+ * commands cause Karel to move forward one block, pick up
+ * a beeper, and then move ahead to the next corner.
+ */
+</pre>
+</p>
+<p>
+  These lines are an example of a comment, which is simply text designed to explain the operation of the program to human readers. Comments in both Karel and Java begin with the characters /* and end with the characters */. Here, the comment begins on the first line and ends several lines later. The stars on the individual lines that make up the text of the comment are not required, but make it easier for human readers to see the extent of the comment. In a simple program, extensive comments may seem silly because the effect of the program is obvious, but they are extremely important as a means of documenting the design of larger, more complex programs.
+  The second part of the program is the line
+<pre>
+  import stanford.karel.*;</pre>
+</p>
+<p>
+  This line requests the inclusion of all definitions from the stanford.karel library. This library contains the basic definitions necessary for writing Karel programs, such as the definitions of the standard operations <code>move()</code> and <code>pickBeeper()</code>. Because you always need access to these operations, every Karel program you write will include this import command before you write the actual program.
+</p>
+<p>
+ The final part of the Karel program consists of the following class definition:
+<pre>
+public class BeeperPickingKarel extends Karel {
+  public void run() {
+    move();
+    pickBeeper();
+    move();
+  }
+}
+</pre>
+</p>
+<p>
+  To understand this definition, it is useful to look more carefully at its structure. The definition of the BeeperPickingKarel class consists of the line beginning with public class and encompasses everything between the curly brace at the end of that line and the corresponding closing brace on the last line of the program. The single line that introduces the new class is called the header of the definition; the code between the braces is called the body.
+</p>
+<p>
+  In programming, it is often very useful to think about a particular definition and its body as separable ideas. In this example, the definition of BeeperPickingKarel has the following form, where the entire body of the definition has been replaced by a box that you can put out of your mind for the moment:
+</p>
+<pre>
+public class BeeperPickingKarel extends Karel {
+  /* Body of the class definition */
+}
+</pre>
+<p>
+  The header line at the top tells you quite a bit about the BeeperPickingKarel class, even before you have looked to see what the body contains. The key new concept in the class header is embodied in the word extends, which is used in both Karel and Java to indicate that a new class is an extension of an existing one. Here, the class header line indicates that BeeperPickingKarel is an extension of the standard Karel class imported from the stanford.karel library.
+</p>
+
+<p>
+Saying that a program (here, BeeperPickingKarel) <code>extends</code> a class (in this case, Karel) tells the computer that the new BeeperPickingKarel program will be a Karel program.
+</p>
+
+<p>
+Now let's look at the body of the BeeperPickingKarel program. That body consists of the following lines:
+</p>
+<pre>
+  public void run() {
+    move();
+    pickBeeper();
+    move(); 
+  }
+</pre>
+<p>
+These lines represent the definition of a new method, which specifies the sequence of steps necessary to respond to a command. As in the case of the BeeperPickingKarel class itself, the method definition consists of two parts that can be considered separately: The first line constitutes the method header and the code between the curly braces is the method body. If you ignore the body for now, the method definition looks like this:
+</p>
+<pre>
+  public void run() {
+    /* body of the method definition */
+  }
+</pre>
+<p>
+The first two words in the method header, public and void, are part of Java’s syntactic structure, and you should pretty much feel free to ignore them at this point. The next word on the header line specifies the name of the new method, which in this case is the method run. Defining a method means that the new Karel subclass can respond to a new command with that name. The built-in Karel class responds to the commands move(), turnLeft(), pickBeeper(), and putBeeper(); a BeeperPickingKarel responds to that same set of commands plus a new command called run. The run command plays a special role in a Karel program. When you start a Karel program in the Eclipse environment, it creates a new Karel instance of the appropriate subclass, adds that Karel to a world that you specify, and then issues the run command. The effect of issuing that command is defined by the body of the run method, which is a sequence of commands that the robot will execute in order. For example, the body of the run method for the BeeperPickingKarel class is
+</p>
+<pre>
+    move();
+    pickBeeper();
+    move();
+</pre>
+<p>
+  Thus, if the initial state of the world matches the example given in Chapter 1, Karel first moves forward into the corner containing the beeper, picks up that beeper, and finally moves forward to the corner just before the wall, as shown in the following before-and- after diagram:
+  </p>
+<center>
+<img style ="width:100%" src="{{pathToRoot}}images/ch2/example1.png"/>
+</center>
+<h2>Solving a more interesting problem</h2>
+<p>
+  The BeeperPickingKarel class defined in Figure 1 doesn’t do very much as yet. Let’s try to make it a little more interesting. Suppose that the goal is not simply to get Karel to pick up the beeper but to move the beeper from its initial position on 2nd Avenue and 1st Street to the center of the ledge at 5th Avenue and 2nd Street. Thus, your next assignment is to define a new Karel subclass that accomplishes the task illustrated in this diagram:
+  </p>
+<center>
+<img style ="width:100%" src="{{pathToRoot}}images/ch2/example2.png"/>
+</center>
+<p>
+  The first three commands in the new program—the ones that move forward, pick up the beeper, and then move up to the ledge—are the same as before:
+</p>
+<pre>
+    move();
+    pickBeeper();
+    move();
+</pre>
+<p>
+  From here, the next step is to turn left to begin climbing the ledge. That operation is easy, because Karel has a turnLeft command in its standard repertoire. Executing a turnLeft command at the end of the preceding sequence of commands leaves Karel facing north on the corner of 3rd Avenue and 1st Street. If Karel then executes a move command, it will move north to reach the following position:
+</p>
+<center>
+<img style ="width:50%" src="{{pathToRoot}}images/ch2/example2-mid.png"/>
+</center>
+<p>
+  From here, the next thing you need to do is get Karel to turn right so that it is again facing east. While this operation is conceptually just as easy as getting Karel to turn left, there is a slight problem: Karel’s language includes a turnLeft command, but no turnRight command. It’s as if you bought the economy model and have now discovered that it is missing some important features.
+</p>
+<p>
+  At this point, you have your first opportunity to begin thinking like a programmer. You have one set of commands, but not exactly the set you need. What can you do? Can you accomplish the effect of a turnRight command using only the capabilities you have? The answer, of course, is yes. You can accomplish the effect of turning right by turning left three times. After three left turns, Karel will be facing in the desired direction. From here, all you need to do is program Karel to move over to the center of the ledge, drop the beeper and then move forward to the final position. Here is a complete implementation of a StepUp program that accomplishes the entire task:
+</p>

@@ -1,0 +1,119 @@
+<html> 
+<head> 
+<title>International Karel</title>
+
+<script src="../plugins/jquery.min.js"></script>
+
+<link rel="stylesheet"  href="../plugins/bootstrap/css/bootstrap.min.css">
+<script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="../style.css">
+
+<script src="..//karel/js/html/websiteImports.js"></script>
+<script>importCss();</script>
+<script>importJs();</script></head> 
+<body> 
+<nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand brand" href="..//">Karel</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Chapters <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="../en/chapter1.html">1 - Meet Karel</a></li>
+            <li><a href="../en/chapter2.html">2 - Programming Karel</a></li>
+            <li><a href="../en/chapter3.html">3 - Control Statements</a></li>
+            
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Java <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="../chapter1.html">Java</a></li>
+            <li><a href="../chapter2.html">JavaScript</a></li>
+            <li><a href="../chapter2.html">Python</a></li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">English <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="../en/chapter3.html">English</a></li>
+            <li><a href="../sp/chapter3.html">Spanish</a></li>
+            <!-- <li><a href="../zh/chapter3.html">Chinese</a></li>
+            <li><a href="../sw/chapter3.html">Swahili</a></li> -->
+          </ul>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="../schedule.html"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> About</a></li>
+      </ul>
+      
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+   <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+<h1>Chapter 3: Control Statements in Karel</h1>
+<hr/>
+<p>
+  The technique of defining new methods—as useful as it is—does not actually enable Karel to solve any new problems. Because each method name is merely a shorthand for a specific set of commands, it is always possible to expand a program written as a series of method calls into a single main program that accomplishes the same task, although the resulting program is likely to be long and difficult to read. The commands—no matter whether they are written as a single program or broken down into a set of methods—are still executed in a fixed order that does not depend on the state of Karel’s world. Before you can solve more interesting problems, you need to discover how to write programs in which this strictly linear, step-by-step order of operations does not apply. In particular, you need to learn several new features of the Karel programming language that make it possible for Karel to examine its world and change its execution pattern accordingly.
+</p>
+
+<p>
+  Statements that affect the order in which a program executes commands are called <b>control statements</b>. Control statements generally fall into the following two classes:
+</p>
+
+<ol>
+  <li><i>Conditional statements</i>. Conditional statements specify that certain statements in a program should be executed only if a particular condition holds. In Karel, you specify conditional execution using an <code>if</code> statement.</li>
+  <li><i>Iterative statements</i>. Iterative statements specify that certain statements in a program should be executed repeatedly, forming what programmers call a <b>loop</b>. Karel supports two different iterative statements: a for statement that is useful when you want to repeat a set of commands a predetermined number of times and a while statement that is useful when you want to repeat an operation as long as some condition holds.</li>
+</ol>
+
+<p>
+<hr/>
+<center>
+  <a class="btn btn-primary btn-lg" href="" role="button">That's all for now</a>
+</center>
+</p>
+
+<hr>
+
+<div class="footer">
+	<p class="pull-left">
+		&#169; Stanford 2018 &#124; Karel the Robot was designed by Rich Pattis. You are reading a web translation of "Karel the Robot Learns Java" by Eric Roberts. 
+	</p>
+</div>
+	
+
+<!-- <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-74362126-1', 'auto');
+  ga('send', 'pageview');
+
+</script> -->
+        </div>
+      </div>
+   </div>
+</body> 
+</html>
+<!-- 

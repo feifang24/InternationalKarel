@@ -1,0 +1,125 @@
+<div class="section" id="example3">
+    <div id ='example3Ide' class = "ide getStarted" style="height:550px">
+      <div id = 'example3IdeCenter' class = "ideCenter" >
+         <div id = 'example3EditorDiv' class = 'ideEditorDiv' style="width:200px"></div>
+         <div id = 'example3CanvasDiv' class = 'ideCanvasDiv'>
+            <canvas id='example3Canvas' class = 'ideCanvas'></canvas>
+         </div>
+      </div>
+    </div>
+    <div style="width:100%;">
+        <div class="buttonBar">
+           <button class="btn btn-primary" id="example3RunButton"><span class="glyphicon glyphicon-play"></span> Run Program</button>
+        </div> 
+    </div>
+<script>
+
+        
+
+function example3() {
+CANVAS_WIDTH = 300
+STARTER_CODE = `/*
+ * File: BeeperPickingKarel.java
+ * -----------------------------
+ * The BeeperPickingKarel program defines a "run" 
+ * method with three commands. These commands cause  
+ * Karel to move forward one block, pick up a beeper,  
+ * and then move ahead to the next corner.
+ */
+public class BeeperTotingKarel extends Karel {
+   public void run() {
+      move();
+      pickBeeper();
+      move();
+      turnLeft();
+      move();
+      turnRight();
+      move();
+      move();
+      putBeeper();
+      move();
+   }
+
+   /**
+    * Turns Karel 90 degrees to the right.
+    */
+   private void turnRight() {
+      turnLeft();
+      turnLeft();
+      turnLeft();
+   }
+}`
+
+ var karelIde = null;
+ var karelEditor = null;
+ var buttonState = 'play';
+
+ function main() {
+   karelEditor = importEditorCode('example3Editor','example3EditorDiv', STARTER_CODE, false);
+     //importRunButtonBar('example3ButtonBar');
+    
+    $("[title]").tooltip({ position: "bottom center", opacity: 0.9});
+    
+    initTabs();
+    var canvas = document.getElementById('example3Canvas');
+    karelIde = KarelIde(karelEditor, canvas, 'stepUp');
+    $('#example3RunButton').click(function(){playClicked()});
+    onresize();
+    
+ }
+
+ function playClicked() {
+  if(buttonState == 'play') {
+    karelIde.playButton();
+      
+      var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
+      $('#example3RunButton').html(resetText);
+      buttonState = 'reset';
+     } else if (buttonState == 'reset') {
+      karelIde.stopButton();
+      var playText = '<span class="glyphicon glyphicon-play"></span> Run Program';
+      $('#example3RunButton').html(playText);
+      buttonState = 'play';
+     }
+  
+  }
+
+ function onresize() { 
+    var ideHeight = $("#example3Ide").height();
+    var parentWidth = $("#example3").width();
+    console.log('pw: ' + parentWidth);
+
+    var ide = document.getElementById('example3Ide');
+    var editorDiv = document.getElementById('example3EditorDiv');
+    var canvas = document.getElementById('example3CanvasDiv');
+    var center = document.getElementById('example3IdeCenter');
+    
+
+    var centerHeight = ideHeight;
+
+    var availibleWidth = parentWidth;
+    var elementSpacing = 12;
+
+    var editorWidth = availibleWidth - CANVAS_WIDTH - elementSpacing; 
+
+    canvas.style.width = CANVAS_WIDTH + 'px';
+    canvas.style.height = CANVAS_WIDTH + 'px';
+    canvas.style.left = (editorWidth + elementSpacing) + 'px';
+
+    editorDiv.style.left = 0 + 'px'
+    editorDiv.style.width = editorWidth + 'px';
+    editorDiv.style.height = ideHeight + 'px';
+    console.log('editor width: ' + editorWidth)
+    if (karelIde) {
+       karelIde.resizeCanvas(CANVAS_WIDTH, CANVAS_WIDTH);
+    }
+    if (karelEditor) {
+       karelEditor.renderer.onResize();
+    }
+ }
+ main()
+ 
+}
+example3();
+    </script>
+</div>

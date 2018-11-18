@@ -1,0 +1,42 @@
+<h2>Defining new methods</h2>
+<p>
+  Even though the <code>StepUp</code> program above demonstrates that it is possible to perform the turnRight operation using only Karel’s built-in commands, the resulting program is not particularly clear conceptually. In your mental design of the program, Karel turns right when it reaches the top of the ledge. The fact that you have to use three turnLeft commands to do so is annoying. It would be much simpler if you could simply say <code>turnRight()</code> and have Karel understand this command. The resulting program would not only be shorter and easier to write, but also significantly easier to read.
+</p>
+
+<p>
+  Fortunately, the Karel programming language makes it possible to define new commands simply by including new method definitions. Whenever you have a sequence of Karel commands that performs some useful task--such as turning right--you can define a new method that executes that sequence of commands. The format for defining a new Karel method has much the same as the definition of <code>run</code> in the preceding examples, which is a method definition in its own right. A typical method definition looks like this:
+</p>
+
+<p style="margin-left:3em">
+<code>private void </code><i>name</i><code>() {</code><br/>
+   <i style="margin-left:2em">commands that make up the body of the method</i><br/>
+<code>}</code>
+</p>
+
+<p>
+  In this pattern, name represents the name you have chosen for the new method. To complete the definition, all you have to do is provide the sequence of commands in the lines between the curly braces. For example, you can define <code>turnRight</code> as follows:
+</p>
+
+<p style="margin-left:3em">
+<code>private void turnRight() {</code><br/>
+   <code style="margin-left:2em">turnLeft();</code><br/>
+   <code style="margin-left:2em">turnLeft();</code><br/>
+   <code style="margin-left:2em">turnLeft();</code><br/>
+<code>}</code>
+</p>
+
+<p>
+  Similarly, you could define a new <code>turnAround</code> method like this:
+</p>
+
+<p style="margin-left:3em">
+<code>private void turnAround() {</code><br/>
+   <code style="margin-left:2em">turnLeft();</code><br/>
+   <code style="margin-left:2em">turnLeft();</code><br/>
+<code>}</code>
+</p>
+
+<p>
+  You can use the name of a new method just like any of Karel’s built-in commands. For example, once you have defined <code>turnRight</code>, you could replace the three turnLeft commands in the <code>StepUpKarel</code> class with a single call to the <code>turnRight</code> method. Here is a revised implementation of the program that uses <code>turnRight</code>:
+</p>
+

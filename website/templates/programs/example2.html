@@ -1,0 +1,117 @@
+<div class="section" id="example2">
+    <div id ='example2Ide' class = "ide getStarted" style="height:450px">
+      <div id = 'example2IdeCenter' class = "ideCenter" >
+         <div id = 'example2EditorDiv' class = 'ideEditorDiv' style="width:200px"></div>
+         <div id = 'example2CanvasDiv' class = 'ideCanvasDiv'>
+            <canvas id='example2Canvas' class = 'ideCanvas'></canvas>
+         </div>
+      </div>
+    </div>
+    <div style="width:100%;">
+        <div id="example2ButtonBar" class="buttonBar"></div> 
+    </div>
+<script>
+
+        
+
+function example2() {
+CANVAS_WIDTH = 300
+STARTER_CODE = `/*
+* File: StepUp.java
+* ----------------------------
+* In the StepUp program, Karel picks up
+* a beeper from 1st Street and then
+* carries that beeper to the center of 
+* a ledge on 2nd Street.
+*/
+import stanford.karel.*;
+public class BeeperTotingKarel extends Karel {
+  public void run() {
+    move();
+    pickBeeper();
+    move();
+    turnLeft();
+    move();
+    turnLeft();
+    turnLeft();
+    turnLeft();
+    move();
+    move();
+    putBeeper();
+    move();
+  } 
+}`
+
+ var karelIde = null;
+ var karelEditor = null;
+ var buttonState = 'play';
+
+ function main() {
+   karelEditor = importEditorCode('example2Editor','example2EditorDiv', STARTER_CODE, false);
+     importRunButtonBar('example2ButtonBar');
+    
+    $("[title]").tooltip({ position: "bottom center", opacity: 0.9});
+    
+    initTabs();
+    var canvas = document.getElementById('example2Canvas');
+    karelIde = KarelIde(karelEditor, canvas, 'stepUp');
+    $('#playButton').click(function(){playClicked()});
+    onresize();
+    
+ }
+
+ function playClicked() {
+  if(buttonState == 'play') {
+    karelIde.playButton();
+      
+      var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
+      $('#playButton').html(resetText);
+      buttonState = 'reset';
+     } else if (buttonState == 'reset') {
+      karelIde.stopButton();
+      var playText = '<span class="glyphicon glyphicon-play"></span> Run Program';
+      $('#playButton').html(playText);
+      buttonState = 'play';
+     }
+  
+  }
+
+ function onresize() { 
+    var ideHeight = $("#example2Ide").height();
+    var parentWidth = $("#example2").width();
+    console.log('pw: ' + parentWidth);
+
+    var ide = document.getElementById('example2Ide');
+    var editorDiv = document.getElementById('example2EditorDiv');
+    var canvas = document.getElementById('example2CanvasDiv');
+    var center = document.getElementById('example2IdeCenter');
+    
+
+    var centerHeight = ideHeight;
+
+    var availibleWidth = parentWidth;
+    var elementSpacing = 12;
+
+    var editorWidth = availibleWidth - CANVAS_WIDTH - elementSpacing; 
+
+    canvas.style.width = CANVAS_WIDTH + 'px';
+    canvas.style.height = CANVAS_WIDTH + 'px';
+    canvas.style.left = (editorWidth + elementSpacing) + 'px';
+
+    editorDiv.style.left = 0 + 'px'
+    editorDiv.style.width = editorWidth + 'px';
+    editorDiv.style.height = ideHeight + 'px';
+    console.log('editor width: ' + editorWidth)
+    if (karelIde) {
+       karelIde.resizeCanvas(CANVAS_WIDTH, CANVAS_WIDTH);
+    }
+    if (karelEditor) {
+       karelEditor.renderer.onResize();
+    }
+ }
+ main()
+ 
+}
+example2();
+    </script>
+</div>
