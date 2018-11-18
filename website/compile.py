@@ -6,7 +6,7 @@ import os.path
 import sys
 
 WEBPAGE_DIR = 'templates/pages'
-ROOT = '/'
+ROOT = 'http://stanford.edu/~cpiech/InternationalKarel/website/'
 LANGUAGES = ['en', 'sp']
 
 # Use the -t flag if you want to compile for local tests
