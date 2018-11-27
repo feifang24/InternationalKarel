@@ -69,6 +69,7 @@ def unconcat(string):
 
 def concat(string):
 	substrings = string.split(" ")
+	substrings[0] = substrings[0].lower()
 	for i in range(1, len(substrings)):
 		substrings[i] = substrings[i].capitalize()
 	return ''.join(substrings)

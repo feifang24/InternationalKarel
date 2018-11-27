@@ -11,6 +11,7 @@ all_languages = [lng['language'] for lng in translate_client.get_languages()]
 def translate_text(text, target_language):
 	return translate_client.translate(text, target_language=target_language)['translatedText']
 
+
 def separate_code_from_file(filename):
     with open(filename, "r") as f:
         page = f.read()
@@ -24,6 +25,17 @@ def separate_code_from_file(filename):
 
 def translate_file(page, code_list, target_language):
 	translated_page = translate_text(page, target_language)
+
+	# format headers
+	tree = html.fromstring(translated_page)
+	headers_list = tree.xpath('/html/body/*[self::h1 or self::h2 or self::h3]/text()')
+	for header in headers_list:
+		replacement = header
+		for i in range(len(replacement)):
+			if replacement[i].isalpha():
+				replacement = replacement[:i] + replacement[i].upper() + replacement[i+1:]
+				break
+		translated_page = translated_page.replace(header, replacement, 1)
 
 	for code in code_list:
 		translated_code = translate_code(code, target_language)

@@ -1,0 +1,33 @@
+<html><body><h1> Escoger frases importantes </h1><h2> 1. Introducción a las declaraciones condicionales </h2><p> Antes de rellenar el bache en el <code>llenarBache()</code> Karel podría querer verificar si algún otro equipo de reparación ya ha llenado el agujero en esa esquina con un beeper. Si es así, Karel no necesita dejar una segunda. Para representar dichos controles en el contexto de un programa, debe usar la instrucción if, que tiene uno de los dos formularios siguientes: <pre><code>
+if (pruebaCondicional()) {
+   // statements to be executed only if the condition is true
+}
+</code></pre> o <pre><code>
+if (pruebaCondicional()) {
+   // statements to be executed if the condition is true
+} else {
+   // statements to be executed if the condition is false
+}
+</code></pre> La primera forma de la sentencia if es útil cuando desea realizar una acción solo bajo ciertas condiciones. El segundo es apropiado cuando necesita elegir entre dos cursos de acción alternativos. </p><h2> 2. Introducción de declaraciones iterativas. </h2><p> Como sabe a partir de este ejemplo que hay exactamente cinco agujeros para llenar, la declaración de control que necesita es un bucle for, que especifica que desea repetir alguna operación un número predeterminado de veces. La sintaxis del bucle for es así: <pre><code>
+for (i = 0; i < numeroDeRepeticiones; i++) {
+   // statements to be repeated
+}
+</code></pre> Por ejemplo, si desea cambiar el <code>llenarCincoBaches.js</code> programa para que resuelva el problema más complejo de llenar cinco agujeros espaciados uniformemente, todo lo que tiene que hacer es escribir el siguiente código: <pre><code>
+function llenarCincoBaches() {
+   for (i = 0; i < 5; i++) {
+      movimiento();
+      llenarBache();
+      movimiento();
+   }
+}
+</code></pre> La instrucción de repetición es útil solo cuando conoce de antemano el número de repeticiones que necesita realizar. </p><h2> 3. Descomposición </h2><p> Cada vez que comienza a resolver un problema de programación, no importa si ese programa está escrito en Karel o un lenguaje de programación más avanzado, su primera tarea es descubrir cómo dividir el problema completo en partes más pequeñas llamadas subproblemas, cada uno de los cuales se puede implementar. como una función separada. Ese proceso se llama descomposición. </p><h2> 4. Ejemplo concreto de descomposición. </h2><p> Aunque podría resolver este problema utilizando las cuatro instrucciones predefinidas, puede usar funciones para mejorar la estructura de su programa. Si no es nada más, puede usar turno de vuelta y giro de derecha para acortar el programa y aclarar su intención. Más importante aún, puede usar la descomposición para dividir el problema en subproblemas y luego resolverlos de manera independiente. Puede, por ejemplo, dividir el problema de rellenar el bache en los siguientes subproblemas: <br> 1. Mueve una cuadra hacia adelante para alcanzar el primer bache en 2nd Avenue. <br> 2. Rellene el bache colocando una señal acústica en él. <br> 3. Avanza tres cuadras para llegar al segundo bache en 5th Avenue. <br> 4. Rellena el bache dejando caer una señal acústica en él. <br> 5. Mueva un bloque hacia adelante para alcanzar la posición final deseada. <br> Si piensa en el problema de esta manera, puede usar funciones para asegurarse de que el programa refleje su concepción de la estructura del problema. </p><h2> 5. Diseño de arriba hacia abajo. </h2><p> La idea central en el refinamiento paso a paso es que debe comenzar el diseño de su programa desde la parte superior, que se refiere al nivel del programa que es conceptualmente más alto y más abstracto. En este nivel, el problema de la torre de señalización se divide claramente en tres fases independientes. Primero, Karel tiene que recoger todos los beepers. En segundo lugar, Karel tiene que depositarlos en la última intersección. En tercer lugar, Karel tiene que volver a su posición inicial. Este esquema sugiere la siguiente descomposición del problema: <pre><code>
+function recogerTorresDeBeeper() {
+   recogerTodosLosBeepers();
+   soltarTodosLosBeepers();
+   volverACasa();
+}
+</code></pre> En este nivel, el problema es fácil de entender. Aunque no haya escrito el código para las funciones en el cuerpo de CollectBeeperTowers, es importante convencerse de que, mientras crea que las funciones que está a punto de escribir resolverán los subproblemas correctamente, tendrá una solución para El problema en su conjunto. </p><h2> 6. Terminología de Karel </h2><p> El mundo de Karel se define por calles que van de oeste a este y avenidas que van de sur a norte. La intersección de una calle y una avenida se llama una esquina. Karel solo puede colocarse en una esquina y debe estar orientado en una de las cuatro direcciones de brújula estándar (norte, este, sur y oeste). En el siguiente mundo de muestra, Karel mira hacia el este en la esquina de 1st Street y 1st Avenue: <img src='/Users/feifang/Desktop/src/karel_world.jpg'> Varios otros componentes del mundo de Karel se pueden ver en este ejemplo. El objeto gris con forma de diamante frente a Karel es un beeper. Rich Pattis describe a los buscadores acústicos como &quot;conos de plástico que emiten un pitido silencioso&quot;. Estos ruidos solo son audibles si Karel y el aviso sonoro están en la misma esquina. Por ejemplo, Karel desconoce la señal acústica en el diagrama tal como aparece y la descubrirá solo si Karel avanza a la siguiente esquina. Las líneas continuas en el diagrama son paredes. El mundo de Karel siempre tiene paredes a lo largo de los bordes y también puede contener paredes internas. </p><h2> 7. Definiendo funciones. </h2><p> Una de las características más poderosas del lenguaje de programación Karel es la capacidad de definir nuevas funciones. Siempre que tenga una secuencia de operaciones de Karel que realice alguna tarea útil, como girar a la derecha, puede asignar un nombre a esa secuencia. La operación de encapsular una secuencia de instrucciones bajo un nuevo nombre se denomina definir una función. El formato para definir una función se ve así: <pre><code>
+function nombre() {
+   // body statements
+}
+</code></pre> La primera palabra en este patrón es función, que se usa tanto en Karel como en JavaScript para definir una función. Las palabras que tienen un significado específico y predefinido en un lenguaje de programación se denominan palabras clave. </p></html>
