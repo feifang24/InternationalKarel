@@ -20,7 +20,8 @@ def get_children(tree):
 
 def get_translatables(tree, id_list, str_lit_list):
 	if tree["type"] == "Identifier":
-		id_list.add(tree["name"])
+		if len(tree["name"]) > 2:
+			id_list.add(tree["name"])
 	elif tree["type"] == "Literal":
 		if isinstance(tree['value'], str):
 			str_lit_list.add(tree["value"])
@@ -78,6 +79,10 @@ def translate_code(code, target_language):
 	get_translatables(tree, id_list, str_lit_list)
 	src_target_map = get_target(id_list, str_lit_list, target_language)
 	translated_code = src_to_target(code, src_target_map)
+
+	# translate commentary
+
+
 	return translated_code
 
 def main():
@@ -98,6 +103,7 @@ def main():
 	target_language = 'ja'
 
 	translated_code = translate_code(code, target_language)
+	import pdb;pdb.set_trace()
 	print("Original code: {}".format(code))
 	print("Translated code: {}".format(translated_code))
 

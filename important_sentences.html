@@ -7,15 +7,15 @@
 <p>
 Before filling the pothole in the <code>fillPothole()</code> function, Karel might want to check whether some other repair crew has already filled the hole on that corner with a beeper.  If so, Karel does not need to put down a second one.  To represent such checks in the context of a program, you need to use the if statement, which has one of the following two forms:<pre><code>
 if (conditionalTest()) {
-   statementsToBeExecutedOnlyIfTheConditionIsTrue();
+   // statements to be executed only if the condition is true
 }
 </code></pre>
 or
 <pre><code>
 if (conditionalTest()) {
-   statementsToBeExecutedIfTheConditionIsTrue();
+   // statements to be executed if the condition is true
 } else {
-   statementsToBeExecutedIfTheConditionIsFalse();
+   // statements to be executed if the condition is false
 }
 </code></pre>
 The first form of the if statement is useful when you want to perform an action only under certain conditions.  The second is appropriate when you need to choose between two alternative courses of action.
@@ -25,14 +25,14 @@ The first form of the if statement is useful when you want to perform an action 
 <h2>2. Introducing iterative statements</h2>
 <p>
 Since you know from this example that there are exactly five holes to fill, the control statement that you need is a for loop, which specifies that you want to repeat some operation a predetermined number of times.  The for loop syntax looks like this:
-<pre> <code>
+<pre><code>
 for (i = 0; i < numberOfRepetitions; i++) {
-   statementsToBeRepeated();
+   // statements to be repeated
 }
 </code> </pre>
-For example, if you want to change the <code>FillTwoPotholes.js</code> program so that it solves the more complex problem of filling five evenly spaced holes, all you have to do is write the following code:
+For example, if you want to change the <code>FillFivePotholes.js</code> program so that it solves the more complex problem of filling five evenly spaced holes, all you have to do is write the following code:
 <pre> <code>
-function FillFivePotholes() {
+function fillFivePotholes() {
    for (i = 0; i < 5; i++) {
       move();
       fillPothole();
@@ -89,7 +89,7 @@ Several other components of Karel’s world can be seen in this example.  The gr
 One of the most powerful features of the Karel programming language is the ability to define new functions.  Whenever you have a sequence of Karel operations that performs some useful task—such as turning right—you can give that sequence a name.  The operation of encapsulating a sequence of instructions under a new name is called defining a function.  The format for defining a function looks like this:
 <pre><code>
 function name() {
-   bodyStatements();
+   // body statements
 }
 </code></pre>
 The first word in this pattern is function, which is used in both Karel and JavaScript to define a function.  Words that have a specific, predefined meaning in a programming language are called keywords.  
